@@ -80,13 +80,13 @@
                         <h3>Punto Kilométrico</h3>
                         <div class="ui-field-contain">
                             <label for="VIA">VIA:</label>                            
-                            <input type="text" id="VIA" size="5" value="A-2" />
+                            <input type="text" class="ui-mini" id="VIA" size="5" value="A-2" />
                         </div>
                         <div class="ui-field-contain">
                             <label for="PK">PK:</label>
-                            <input type="text" id="PK" size="5" value="300" style="width:100px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                            <input type="text" class="ui-mini" id="PK" size="5" value="300" style="width:100px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                         </div>                        
-                        <a id="localizaPk" data-role="button" style="height:20px;height:20px;padding:0px;">Localizar PK</a>
+                        <a id="localizaPk" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;">Localizar PK</a>
                         <div id="seleccion"></div>
                     </div>
                     <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
@@ -111,12 +111,12 @@
                                     <option value="50">Zaragoza</option>
                                 </select>
                             </div>
-                        <div class="ui-field-contain">
-                            <label for="textarea-1">Número:</label>
-                            <input type="text" id="numero" size="5" value="10130" style="width:100px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
-                        </div>
+                        
+                            <p for="numero" style="margin: 0px">Número:</p>
+                            <input type="text" class="ui-mini" id="numero" size="5" value="10130" style="" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        
                         <!--<button type="button" id="busquedaCotos" style="width: 200px;height: 40px;font-size: 10px;background-color:#A4A4A4;color:#FFFFFF;text-shadow: 0 0px"><b>Localizar coto</b></button>-->
-                        <a id="busquedaCotos" data-role="button" style="height:20px;height:20px;padding:0px;">Localizar coto</a>
+                        <a id="busquedaCotos" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;">Localizar coto</a>
                         <div id="busqueda"></div>
                     </div>
                     <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">

@@ -2,10 +2,3 @@
     width: 25px;
     height: 25px;
 }
-.ui-field-contain > label ~ [class*=ui-], .ui-field-contain .ui-controlgroup-controls {
-    float: right;
-    width: 61%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
