@@ -104,8 +104,10 @@
     <splash src="res/screens/windows/SplashScreenPhone.scale-240.png" width="1152" height="1920" />
   </platform>
   <preference name="Orientation" value="default" />
-  <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
-   <preference name="BackupWebStorage" value="local" />
+  <plugin name="cordova-plugin-geolocation" spec="~2.4.3">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Geolocation used for development purposes" />
+   </plugin>
+  <preference name="BackupWebStorage" value="local" />
   <preference name="android-minSdkVersion" value="16" />
   <preference name="android-maxSdkVersion" value="26" />
   <preference name="android-targetSdkVersion" value="16" />

@@ -79,7 +79,7 @@ require([
         infoTemplate.setContent(getTextContent);
         function getTextContent(graphic) {
             if (graphic.attributes.FHASTA) {
-                txtDate2 = new Date(parseInt(graphic.attributes.FDESDE)).toLocaleDateString();
+                txtDate2 = new Date(parseInt(graphic.attributes.FDESDE)).toLocaleDateString("es-ES", options);
             }
             else { txtDate2 = "Actualidad"; }
             var texto;
@@ -103,10 +103,10 @@ require([
 
         var infoTemplateVias = new InfoTemplate("");
         infoTemplateVias.setTitle("${VIA}");
-        infoTemplateVias.setContent(getTextContent);
-        function getTextContent(graphic) {
+        infoTemplateVias.setContent(getTextContent2);
+        function getTextContent2(graphic) {
             var desde = parseFloat(graphic.attributes.PK_MIN).toFixed(2);
-            var hasta = parseFloat(graphic.attributes.PK_MAX).toFixed(2);
+            var hasta = parseFloat(graphic.attributes.PK_MAX).toFixed(3);
             if (desde < 0) { desde = 0;}
             var texto;
             texto = "<b>Vía:  </b>" + graphic.attributes.VIA + "</br>" +
