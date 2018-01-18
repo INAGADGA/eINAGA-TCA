@@ -57,7 +57,7 @@ require([
         setFechas();
         // variables capa de busqueda del servicio a consultar  ------------------------------------------------------------------------------------------------------------------------------
         var rutaServicio = "https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_Caza_historico/MapServer";
-
+        
         fTemplate = function locate() {
 
             if (graphico !== undefined) {
@@ -75,7 +75,7 @@ require([
         };
         var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         var infoTemplate = new InfoTemplate("");
-        infoTemplate.setTitle("${MATRICULA}");
+        infoTemplate.setTitle("${MATRICULA:compare}");
         infoTemplate.setContent(getTextContent);
         function getTextContent(graphic) {
             if (graphic.attributes.FHASTA) {
@@ -100,12 +100,26 @@ require([
                 '<input type="button" value="Acercar "  id="locate"  title="Centrar Mapa" alt="Centrar Mapa" class = "localizacion" onclick="  fTemplate(); "/></div>';
             return texto;
         }
+
+        var infoTemplateVias = new InfoTemplate("");
+        infoTemplateVias.setTitle("${VIA}");
+        infoTemplateVias.setContent(getTextContent);
+        function getTextContent(graphic) {
+            var desde = parseFloat(graphic.attributes.PK_MIN).toFixed(2);
+            var hasta = parseFloat(graphic.attributes.PK_MAX).toFixed(2);
+            if (desde < 0) { desde = 0;}
+            var texto;
+            texto = "<b>Vía:  </b>" + graphic.attributes.VIA + "</br>" +
+                "<b>Km Desde:  </b>" + desde + "</br>" +
+                "<b>Km Hasta:  </b>" + hasta + "</br>";
+            return texto;
+        }
        
         compare = function (value, key, data) {
-            var numexp = data.NUMEXP;
-            var ejercicio = numexp.substring(8, 12);
-            var exp = numexp.substring(12, 17);
-            return ejercicio + "/" + exp;
+            var matricula = data.MATRICULA;
+            var ambito = matricula.substring(0, 2).replace("22", "HU").replace("44", "TE").replace("50", "Z");
+            var numero = matricula.substring(2, matricula.length);
+            return ambito + "-" + numero;
         };
         
 
@@ -136,7 +150,7 @@ require([
             outFields: ["*"]
         });
         dynamicMSLayer.setInfoTemplates({
-            0: { infoTemplate: new InfoTemplate("VÍAS", "${*}") },
+            0: { infoTemplate: infoTemplateVias }, //new InfoTemplate("VÍAS", "${*}") },
             1: { infoTemplate: "" },
             2: { infoTemplate: infoTemplate }
         });
@@ -389,12 +403,15 @@ require([
             getCotosPosition1km();
         });
         on(dom.byId("busquedaCotos"), "click", function () {
+            map.getLayer("Geodesic").clear();
             var query = new Query();
             var dropd = $("#select-choice-1");
             query.where = "AMBITO = " + dropd.find('option:selected').val() + " AND NUMERO = " + dom.byId("numero").value + " and " + dameFiltroFecha();
             query.returnGeometry = true;
             query.outFields = ["*"];
             fcCotos.queryFeatures(query, pintaSeleccionCotos);
+            $("[data-role=panel]").panel("close");
+
         });
 
         // funciones   -------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -514,15 +531,13 @@ require([
             if (mesString.length < 2) { mesString = '0' + mesString; }
 
             var fechaHoy = diaString + "/" + mesString + "/" + d.getFullYear();
-            var fechaN1 = diaIniString + "/" + mesString + "/" + (d.getFullYear() - 1);
 
-            dom.byId("fechaini").value = fechaN1;
-            var fechaN1Split = fechaN1.split("/");
+            dom.byId("fechaini").value = fechaHoy;
             var fechaHoySplit = fechaHoy.split("/");
 
             var midatestringIni = $("#fechaini").val();
             if (midatestringIni === undefined || midatestringIni === "") {
-                dom.byId("fechaini").value = [fechaN1Split[2], fechaN1Split[1], fechaN1Split[0]].join("-");
+                dom.byId("fechaini").value = [fechaHoySplit[2], fechaHoySplit[1], fechaHoySplit[0]].join("-");
             }
         }
 
@@ -655,7 +670,7 @@ require([
             }
             switch (geometry.type) {
                 case "point":
-                    symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 10, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 1), new Color([0, 255, 0, 0.25]));
+                    symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 10, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([7, 41, 101]), 2), new Color([20, 255, 255, 0.25]));
                     break;
                 case "polyline":
                     symbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new Color([255, 0, 0]), 1);
@@ -690,8 +705,8 @@ require([
             var attrs, sym;
             attrs = { "type": "Geodesic" };
             sym = new esri.symbol.SimpleFillSymbol();
-            sym.setColor(null);
-            sym.setOutline(new esri.symbol.SimpleLineSymbol("solid", new dojo.Color([255, 0, 0, 1]), 2));
+            sym.setColor(new Color([20, 255, 255, 0.25]));
+            sym.setOutline(new esri.symbol.SimpleLineSymbol("solid", new Color([7, 41, 101]), 3)); //rgba(7, 41, 101, 0.85);
             addGraphic(b[0], attrs, sym);
         }
         function addGraphic(geom, attrs, sym) {
@@ -703,7 +718,7 @@ require([
                 new esri.Graphic(geom, sym, attrs, template)
             );
             if (g.graphics.length > 0) {
-                map.setExtent(esri.graphicsExtent([g.graphics[0]]).expand(3), true);
+                map.setExtent(esri.graphicsExtent([g.graphics[0]]).expand(2), true);
             }
             var query = new Query();
             query.geometry = geom.getExtent();
@@ -755,8 +770,8 @@ require([
             coordx = number[0];
             coordy = number[1];
             var month = parseInt(midatestring[1]);
-            var day = parseInt(midatestring[2]);
-            var year = parseInt(midatestring[0]);
+            var day = parseInt(midatestring[0]);
+            var year = parseInt(midatestring[2]);
             var rtdo = compute(day, month, year, coordx, coordy);
             var d = new Date(year, month - 1, day);
             var mifecha = dias[d.getDay() + 1] + "  " + d.toLocaleDateString(); 
