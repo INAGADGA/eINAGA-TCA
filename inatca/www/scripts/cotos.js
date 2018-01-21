@@ -105,7 +105,7 @@ require([
         infoTemplateVias.setTitle("${VIA}");
         infoTemplateVias.setContent(getTextContent2);
         function getTextContent2(graphic) {
-            var desde = parseFloat(graphic.attributes.PK_MIN).toFixed(2);
+            var desde = parseFloat(graphic.attributes.PK_MIN).toFixed(3);
             var hasta = parseFloat(graphic.attributes.PK_MAX).toFixed(3);
             if (desde < 0) { desde = 0;}
             var texto;
@@ -712,7 +712,7 @@ require([
         function addGraphic(geom, attrs, sym) {
             var template, g, s;
             poligonoConsulta = geom;
-            template = new esri.InfoTemplate("", "Type: ${type}");
+          //  template = new esri.InfoTemplate("", "Type: ${type}");
             g = map.getLayer("Geodesic");
             map.getLayer(attrs.type).add(
                 new esri.Graphic(geom, sym, attrs, template)
@@ -774,7 +774,7 @@ require([
             var year = parseInt(midatestring[2]);
             var rtdo = compute(day, month, year, coordx, coordy);
             var d = new Date(year, month - 1, day);
-            var mifecha = dias[d.getDay() + 1] + "  " + d.toLocaleDateString(); 
+            var mifecha = dias[d.getDay()] + "  " + d.toLocaleDateString("es-ES", options); 
             var consultaOrto = "<b>Fecha: </b>" + mifecha + "<hr>" + listadoAfeccionesCotos + "<hr>" + popTotal + " <hr><b>Orto: </b>" + rtdo[0] + " h " + rtdo[1] + " min </br><b>Ocaso: </b> " + rtdo[2] + " h " + rtdo[3] + " min";
             dom.byId("ortoyocaso").innerHTML = consultaOrto;
             $("#colapseCotos").collapsible("expand");
@@ -838,7 +838,7 @@ require([
                 exactMatch: false,
                 name: "Municipios",
                 outFields: ["*"],
-                placeholder: " ",
+                placeholder: "Introduzca nombre de Municipio",
                 maxResults: 6,
                 maxSuggestions: 6,
                 enableSuggestions: true,
@@ -851,7 +851,7 @@ require([
                 exactMatch: true,
                 name: "Parcelas Catastrales",
                 outFields: ["*"],
-                placeholder: " ",
+                placeholder: "Introduza Refpar completa",
                 maxResults: 6,
                 maxSuggestions: 6,
                 enableSuggestions: true,
@@ -880,7 +880,7 @@ require([
                     minScale: 300000,
                     distance: 50000
                 },
-                placeholder: "Búsqueda Geocoder",
+                placeholder: "Búsqueda por Geocoder",
                 maxResults: 3,
                 maxSuggestions: 6,
                 enableSuggestions: false,
