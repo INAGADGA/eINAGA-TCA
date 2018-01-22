@@ -79,7 +79,7 @@ require([
         infoTemplate.setContent(getTextContent);
         function getTextContent(graphic) {
             if (graphic.attributes.FHASTA) {
-                txtDate2 = new Date(parseInt(graphic.attributes.FDESDE)).toLocaleDateString("es-ES", options);
+                txtDate2 = new Date(parseInt(graphic.attributes.FHASTA)).toLocaleDateString("es-ES", options);
             }
             else { txtDate2 = "Actualidad"; }
             var texto;
@@ -300,7 +300,7 @@ require([
         home.startup();
 
         // Capas necesarias -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/2");
+        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/3");
         var fcMunis = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/3");
         var fcPks = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
         var dynamicMSLayerBasico = new esri.layers.ArcGISDynamicMapServiceLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer", {
@@ -319,7 +319,7 @@ require([
 
         $(document).on('change', '#fechaini', function () {            
             var layerDefs = [];
-            layerDefs[2] = dameFiltroFecha(); 
+            layerDefs[3] = dameFiltroFecha(); 
             dynamicMSLayer.setLayerDefinitions(layerDefs);
         });
         
