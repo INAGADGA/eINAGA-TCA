@@ -395,11 +395,7 @@ require([
             map.setInfoWindowOnClick(false); dom.byId("etrs").innerHTML = "";
             $("[data-role=panel]").panel("close");
         });
-        on(dom.byId("posicion"), "click", function () {
-            getPosition();
-        });
-             
-        
+               
         //localizaPk
         var fcsymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL, new Color([247, 34, 101, 0.9]), 1), new Color([207, 34, 171, 0.5]));
         fcPks.setSelectionSymbol(fcsymbol);
@@ -439,7 +435,7 @@ require([
             map.graphics.clear();
             var features = response.features;
             if (features.length == 0) {
-                dom.byId("busqueda").innerHTML = "No se ha encontrado ningún coto con esa matricula";
+                dom.byId("busqueda").innerHTML = "No se ha encontrado ningún coto con esa matrícula";
             }
             for (var x = 0; x < features.length; x++) {
                 dom.byId("busqueda").innerHTML = "";
