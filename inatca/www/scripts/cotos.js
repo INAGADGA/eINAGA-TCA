@@ -41,6 +41,7 @@ require([
     "esri/dijit/Search",
     "esri/dijit/HomeButton",
     "esri/dijit/Legend",
+    "esri/dijit/LocateButton",
 
     "esri/layers/FeatureLayer",
     "esri/layers/ArcGISDynamicMapServiceLayer",
@@ -49,7 +50,7 @@ require([
 
 ],
     function (dom, domStyle, array, connect, parser, query, on, domConstruct, Color, esriConfig, Map, Graphic, Units, InfoTemplate, PopupMobile, Draw, Circle, normalizeUtils, webMercatorUtils, GeometryService, BufferParameters, Query, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, TextSymbol,
-        Measurement, OverviewMap, BasemapGallery, Basemap, BasemapLayer, Scalebar, Search, HomeButton, Legend,  FeatureLayer, ArcGISDynamicMapServiceLayer, WMSLayer, WMSLayerInfo) {
+        Measurement, OverviewMap, BasemapGallery, Basemap, BasemapLayer, Scalebar, Search, HomeButton, Legend, LocateButton,  FeatureLayer, ArcGISDynamicMapServiceLayer, WMSLayer, WMSLayerInfo) {
         parser.parse();
 
         var popup = new PopupMobile(null, domConstruct.create("div"));

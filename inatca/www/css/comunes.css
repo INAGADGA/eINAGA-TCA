@@ -78,10 +78,11 @@ body {
             z-index: 30
         }
 
-        .HomeButton .home {
-            width: 40px;
-            background-color: rgba(7, 41, 101, 0.85)
-        }
+.HomeButton .home {
+    width: 40px; 
+    background-color: rgba(7, 41, 101, 0.85);
+    border: 1px solid #ddd;
+}
 
         #LocateButton {
             position: absolute;
@@ -122,6 +123,8 @@ body {
             color: white;
             border-color: #ddd
         }
+
+        
 
         .esriSimpleSliderTL {
             display: none
