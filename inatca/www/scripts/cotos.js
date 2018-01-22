@@ -56,7 +56,7 @@ require([
         var popup = new PopupMobile(null, domConstruct.create("div"));
         setFechas();
         // variables capa de busqueda del servicio a consultar  ------------------------------------------------------------------------------------------------------------------------------
-        var rutaServicio = "https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_Caza_historico/MapServer";
+        var rutaServicio = "https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer";
         
         fTemplate = function locate() {
 
@@ -150,14 +150,15 @@ require([
             outFields: ["*"]
         });
         dynamicMSLayer.setInfoTemplates({
-            0: { infoTemplate: infoTemplateVias }, //new InfoTemplate("VÍAS", "${*}") },
-            1: { infoTemplate: "" },
-            2: { infoTemplate: infoTemplate }
+            0: { infoTemplate: "" }, //new InfoTemplate("VÍAS", "${*}") },
+            1: { infoTemplate: infoTemplateVias },
+            2: { infoTemplate: new InfoTemplate("ZAPS", "${*}") },
+            3: { infoTemplate: infoTemplate }
         });
-        dynamicMSLayer.setVisibleLayers([0,1, 2]);
+        dynamicMSLayer.setVisibleLayers([0, 1, 2, 3]);
         dynamicMSLayer.setImageFormat("png32", true);
         var layerDefs = [];
-        layerDefs[2] = dameFiltroFecha();
+        layerDefs[3] = dameFiltroFecha();
         dynamicMSLayer.setLayerDefinitions(layerDefs);
         // widgets -------------------------------------------------------------------------------------------------------------------------------------------------------------------
         geoLocate = new LocateButton({ map: map }, "LocateButton");
@@ -299,7 +300,7 @@ require([
         home.startup();
 
         // Capas necesarias -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_Caza_historico/MapServer/2");
+        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/2");
         var fcMunis = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/3");
         var fcPks = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
         var dynamicMSLayerBasico = new esri.layers.ArcGISDynamicMapServiceLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer", {
