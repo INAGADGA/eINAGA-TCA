@@ -41,7 +41,6 @@ require([
     "esri/dijit/Search",
     "esri/dijit/HomeButton",
     "esri/dijit/Legend",
-    "esri/dijit/LocateButton",
 
     "esri/layers/FeatureLayer",
     "esri/layers/ArcGISDynamicMapServiceLayer",
@@ -50,7 +49,7 @@ require([
 
 ],
     function (dom, domStyle, array, connect, parser, query, on, domConstruct, Color, esriConfig, Map, Graphic, Units, InfoTemplate, PopupMobile, Draw, Circle, normalizeUtils, webMercatorUtils, GeometryService, BufferParameters, Query, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, TextSymbol,
-        Measurement, OverviewMap, BasemapGallery, Basemap, BasemapLayer, Scalebar, Search, HomeButton, Legend, LocateButton, FeatureLayer, ArcGISDynamicMapServiceLayer, WMSLayer, WMSLayerInfo) {
+        Measurement, OverviewMap, BasemapGallery, Basemap, BasemapLayer, Scalebar, Search, HomeButton, Legend,  FeatureLayer, ArcGISDynamicMapServiceLayer, WMSLayer, WMSLayerInfo) {
         parser.parse();
 
         var popup = new PopupMobile(null, domConstruct.create("div"));
@@ -95,11 +94,17 @@ require([
                 "</br>" +
                 "<b>Desde:  </b>" + new Date(parseInt(graphic.attributes.FDESDE)).toLocaleDateString("es-ES", options) + "</br>" +
                 "<b>Hasta:  </b>" + txtDate2 + "</br></br>" +
-                "<a href=http://aplicaciones.aragon.es/inacotos/buscar.do?ambito.ambito=" + graphic.attributes.AMBITO + "&coto=" + graphic.attributes.NUMERO + "&m=coto target=_blank>Consulta de terrenos cinegéticos</a><hr/>" +
+                "<a href=http://aplicaciones.aragon.es/inacotos/buscar.do?ambito.ambito=" + graphic.attributes.AMBITO + "&coto=" + graphic.attributes.NUMERO + "&m=coto target=_blank>Consulta Plan Anual</a><hr/>" +
                 '<div id="divlocalizar"> ' +
                 '<input type="button" value="Acercar "  id="locate"  title="Centrar Mapa" alt="Centrar Mapa" class = "localizacion" onclick="  fTemplate(); "/></div>';
             return texto;
         }
+        compare = function (value, key, data) {
+            var matricula = data.MATRICULA;
+            var ambito = matricula.substring(0, 2).replace("22", "HU").replace("44", "TE").replace("50", "Z");
+            var numero = matricula.substring(2, matricula.length);
+            return ambito + "-" + numero;
+        };
 
         var infoTemplateVias = new InfoTemplate("");
         infoTemplateVias.setTitle("${VIA}");
@@ -114,14 +119,19 @@ require([
                 "<b>Km Hasta:  </b>" + hasta + "</br>";
             return texto;
         }
-       
-        compare = function (value, key, data) {
-            var matricula = data.MATRICULA;
-            var ambito = matricula.substring(0, 2).replace("22", "HU").replace("44", "TE").replace("50", "Z");
-            var numero = matricula.substring(2, matricula.length);
-            return ambito + "-" + numero;
-        };
-        
+
+        var infoTemplateZaps = new InfoTemplate("");
+        infoTemplateZaps.setTitle("${CZAP}");
+        infoTemplateZaps.setContent(getTextContent3);
+        function getTextContent3(graphic) {
+            var czap = graphic.attributes.CZAP;
+            var texto;
+            texto = "<b>Ámbito:  </b>" + czap.substring(0,2) + "</br>" +
+                "<b>Número:  </b>" + czap.substring(2, czap.length -2) + "</br>" +
+                "<b>Código:  </b>" + czap.substring(czap.length - 2, czap.length) + "</br>";
+            return texto;
+        }
+
 
         //  otras variables -------------------------------------------------------------------------------------------------------------------------------------------------------------------        
         var d = new Date();
@@ -152,17 +162,19 @@ require([
         dynamicMSLayer.setInfoTemplates({
             0: { infoTemplate: "" }, //new InfoTemplate("VÍAS", "${*}") },
             1: { infoTemplate: infoTemplateVias },
-            2: { infoTemplate: new InfoTemplate("ZAPS", "${*}") },
-            3: { infoTemplate: infoTemplate }
+            2: { infoTemplate: infoTemplateZaps },
+            3: { infoTemplate: infoTemplate },
+            4: { infoTemplate: infoTemplate }
         });
-        dynamicMSLayer.setVisibleLayers([0, 1, 2, 3]);
+        dynamicMSLayer.setVisibleLayers([0, 1, 2, 3, 4]);
         dynamicMSLayer.setImageFormat("png32", true);
         var layerDefs = [];
         layerDefs[3] = dameFiltroFecha();
+        layerDefs[4] = dameFiltroFecha();
         dynamicMSLayer.setLayerDefinitions(layerDefs);
+
+        
         // widgets -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        geoLocate = new LocateButton({ map: map }, "LocateButton");
-        geoLocate.startup();
         // widget scalebar
         var scalebar = new Scalebar({ map: map, attachTo: "bottom-center", scalebarUnit: "metric" });
         // widget medicion
@@ -300,7 +312,7 @@ require([
         home.startup();
 
         // Capas necesarias -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/3");
+        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/4");
         var fcMunis = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/3");
         var fcPks = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
         var dynamicMSLayerBasico = new esri.layers.ArcGISDynamicMapServiceLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer", {
@@ -320,7 +332,8 @@ require([
         $(document).on('change', '#fechaini', function () {            
             var layerDefs = [];
             layerDefs[3] = dameFiltroFecha(); 
-            dynamicMSLayer.setLayerDefinitions(layerDefs);
+            layerDefs[4] = dameFiltroFecha(); 
+            dynamicMSLayer.setLayerDefinitions(layerDefs);            
         });
         
         //click handler for the draw tool buttons
@@ -632,7 +645,37 @@ require([
                 var graphic = new Graphic(geom, sfs);
                 map.graphics.add(graphic);
                 map.setExtent(geom.getExtent(), true);
+
+                pintaResultados("", "");
             });
+        }
+
+        // es necesario realizar centrar el mapa antes de llamar a la función (utiliza el centroide del mapa para el Orto y Ocaso)
+        function pintaResultados(cotos,municipios) {
+            
+            var midatestring = parseDate($("#fechaini").val()).split('/');
+            coordx = (map.extent.xmax - map.extent.xmin) / 2 + map.extent.xmin;
+            coordy = (map.extent.ymax - map.extent.ymin) / 2 + map.extent.ymin;
+            var number = webMercatorUtils.xyToLngLat(coordx, coordy);
+            coordx = number[0];
+            coordy = number[1];
+            var month = parseInt(midatestring[1]);
+            var day = parseInt(midatestring[0]);
+            var year = parseInt(midatestring[2]);
+            var rtdo = compute(day, month, year, coordx, coordy);
+            var d = new Date(year, month - 1, day);
+            var mifecha = dias[d.getDay()] + "  " + d.toLocaleDateString("es-ES", options);
+            var consultaOrto = "<b>Fecha: </b>" + mifecha + "<hr>";
+            if (cotos.length > 0) {
+                consultaOrto += cotos + "<hr>" 
+            }
+            if (municipios.length > 0) {
+                consultaOrto += municipios + "<hr>" 
+            }
+            consultaOrto += "<b>Orto: </b>" + rtdo[0] + " h " + rtdo[1] + " min </br > <b>Ocaso: </b> " + rtdo[2] + " h " + rtdo[3] + " min";
+            dom.byId("ortoyocaso").innerHTML = consultaOrto;
+            $("#colapseCotos").collapsible("expand");
+            $("[data-role=panel]").panel("open");
         }
        
         function OpenInNewTab(url) {
@@ -764,22 +807,8 @@ require([
                     popTotal += "</br>" + features[x].attributes.D_MUNI_INE;
                 }
             }
-            var midatestring = parseDate($("#fechaini").val()).split('/'); 
-            coordx = (map.extent.xmax - map.extent.xmin) / 2 + map.extent.xmin;
-            coordy = (map.extent.ymax - map.extent.ymin) / 2 + map.extent.ymin;
-            var number = webMercatorUtils.xyToLngLat(coordx, coordy);
-            coordx = number[0];
-            coordy = number[1];
-            var month = parseInt(midatestring[1]);
-            var day = parseInt(midatestring[0]);
-            var year = parseInt(midatestring[2]);
-            var rtdo = compute(day, month, year, coordx, coordy);
-            var d = new Date(year, month - 1, day);
-            var mifecha = dias[d.getDay()] + "  " + d.toLocaleDateString("es-ES", options); 
-            var consultaOrto = "<b>Fecha: </b>" + mifecha + "<hr>" + listadoAfeccionesCotos + "<hr>" + popTotal + " <hr><b>Orto: </b>" + rtdo[0] + " h " + rtdo[1] + " min </br><b>Ocaso: </b> " + rtdo[2] + " h " + rtdo[3] + " min";
-            dom.byId("ortoyocaso").innerHTML = consultaOrto;
-            $("#colapseCotos").collapsible("expand");
-            $("[data-role=panel]").panel("open");
+
+            pintaResultados(listadoAfeccionesCotos, popTotal);
         }
 
 
@@ -820,19 +849,6 @@ require([
         }, "search");
         var sources = [
             {
-            //    featureLayer: fcInf,
-            //    searchFields: searchFields, //["SOLICITANTE","NUMEXP"],
-            //    displayField: displayField, //"SOLICITANTE",
-            //    exactMatch: false,
-            //    name: name, //"Resolución  (Solicitante,Expediente)",
-            //    outFields: ["*"],
-            //    placeholder: " ",
-            //    maxResults: 6,
-            //    maxSuggestions: 6,
-            //    enableSuggestions: true,
-            //    infoTemplate: infoTemplate,
-            //    minCharacters: 0
-            //}, {
                 featureLayer: fcMunis,
                 searchFields: ["D_MUNI_INE"],
                 displayField: "D_MUNI_INE",
@@ -859,20 +875,6 @@ require([
                 infoTemplate: new InfoTemplate("${REFPAR}", templateCatastro),
                 minCharacters: 0
             },
-            //{
-            //    featureLayer: new esri.layers.FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/7"),
-            //    searchFields: ["REFPAR"],
-            //    displayField: "REFPAR",
-            //    exactMatch: true,
-            //    name: "Parcelas Sigpac",
-            //    outFields: ["*"],
-            //    placeholder: " ",
-            //    maxResults: 6,
-            //    maxSuggestions: 6,
-            //    enableSuggestions: true,
-            //    infoTemplate: new InfoTemplate("${REFPAR}", templateSigpac),
-            //    minCharacters: 0
-            //},
             {
                 locator: new esri.tasks.Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"),
                 singleLineFieldName: "SingleLine",
@@ -917,28 +919,14 @@ require([
         // carga capas -y eventos ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         // inicializar las fechas para realizar la búsqueda del último año       
-        map.addLayers([dynamicMSLayerBasico, dynamicMSLayer, layerCat]);
+        map.addLayers([dynamicMSLayerBasico,  dynamicMSLayer, layerCat]);
 
-        $("#radio-0").click(function () {
-            $("#radio-1").prop("checked", false);
-            $("#radio-1").checkboxradio("refresh");
-            $("#radio-2").prop("checked", false);
-            $("#radio-2").checkboxradio("refresh");
-            $(this).prop("checked", true);
-            $(this).checkboxradio("refresh");
-            layerCat.visible = true;
-            //wmsSigpac.visible = false;
-            map.setExtent(map.extent);
-        });
-        $("#radio-2").click(function () {
-            $("#radio-0").prop("checked", false);
-            $("#radio-0").checkboxradio("refresh");
-            $("#radio-1").prop("checked", false);
-            $("#radio-1").checkboxradio("refresh");
-            $(this).prop("checked", true);
-            $(this).checkboxradio("refresh");
-            layerCat.visible = false;
-            map.setExtent(map.extent);
+        $("#checkboxCatastro").click(function () {
+            if ($("#checkboxCatastro").prop("checked")){
+                layerCat.visible = true;
+            }
+            else { layerCat.visible = false; }
+            map.setExtent(map.extent);           
         });
 
     });

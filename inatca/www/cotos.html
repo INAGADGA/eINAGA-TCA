@@ -59,13 +59,30 @@
                 <div data-role="collapsible-set" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                     <!--<h3>Consulta de cotos</h3>-->
                     <div class="ui-body ui-body-a ui-corner-all" style="background-color: rgb(230,230,230);">
-                        <div>Seleccionar fecha consulta</div>
+                        <div>Visualizar cotos en la fecha:</div>
                         <form>
                             <div data-role="fieldcontain" style="margin: 0;">                                
                                 <input id="fechaini" type="date" data-role="date">
                             </div>
                         </form>
-                    </div>                    
+                    </div>      
+                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Localización de Cotos</h3>
+                        <div id="selector" data-role="fieldcontain" class="ui-mini" style="width:95%">
+                            <select name="select-choice-0" id="select-choice-1" data-theme="b">
+                                <option value="22">Huesca</option>
+                                <option value="44">Teruel</option>
+                                <option value="50">Zaragoza</option>
+                            </select>
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="numero" data-mini="true">Número:</label>
+                            <input type="text" data-mini="true" id="numero" size="5" maxlength="5" value="10130" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        </div>
+                        <!--<button type="button" id="busquedaCotos" style="width: 200px;height: 40px;font-size: 10px;background-color:#A4A4A4;color:#FFFFFF;text-shadow: 0 0px"><b>Localizar coto</b></button>-->
+                        <a id="busquedaCotos" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;" title="Localizar un coto">Localizar coto</a>
+                        <div id="busqueda"></div>
+                    </div>
                     <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                         <h3>Área de Influencia</h3>
                         <label>Realiza un buffer de 1km:</label>
@@ -102,34 +119,17 @@
                 <p />
                 <hr />
                 <div data-role="collapsible-set">
-                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3>Localización de Cotos</h3>
-                        <div id="selector" data-role="fieldcontain" class="ui-mini" style="width:95%">
-                            <select name="select-choice-0" id="select-choice-1" data-theme="b">
-                                <option value="22">Huesca</option>
-                                <option value="44">Teruel</option>
-                                <option value="50">Zaragoza</option>
-                            </select>
-                        </div>
-                        <div data-role="fieldcontain">
-                            <label for="numero" data-mini="true">Número:</label>
-                            <input type="text"  data-mini="true" id="numero" size="5"  maxlength="5" value="10130" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
-                        </div>
-                            <!--<button type="button" id="busquedaCotos" style="width: 200px;height: 40px;font-size: 10px;background-color:#A4A4A4;color:#FFFFFF;text-shadow: 0 0px"><b>Localizar coto</b></button>-->
-                            <a id="busquedaCotos" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;" title="Localizar un coto">Localizar coto</a>
-                            <div id="busqueda"></div>
+                        <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                            <h3>Medición y Coordenadas</h3>
+                            <div id="measurementDiv"></div>
+                            <div id="etrs" style="font-size: 12px;text-align: left;vertical-align: middle;"></div>
+                            <!--<button type="button" id="clearGraphicsM" style="width: 150px;height: 40px;font-size: 10px;text-align: center;vertical-align: middle;position:relative;">Borra medición</button>-->
+                            <a id="clearGraphicsM" data-role="button" style="height:20px;height:20px;padding:0px;" title="Borrar medición">Borra medición</a>
                         </div>
                         <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                             <h3>Leyenda</h3>
                             <div id="legendDiv"></div>
-                        </div>
-                        <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                            <h3>Medición y Coordenadas</h3>
-                            <div id="measurementDiv" ></div>
-                            <div id="etrs" style="font-size: 12px;text-align: left;vertical-align: middle;"></div>
-                            <!--<button type="button" id="clearGraphicsM" style="width: 150px;height: 40px;font-size: 10px;text-align: center;vertical-align: middle;position:relative;">Borra medición</button>-->
-                            <a id="clearGraphicsM" data-role="button" style="height:20px;height:20px;padding:0px;"title="Borrar medición">Borra medición</a>
-                        </div>
+                        </div>                        
                         <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
                             <h3>Opacidad</h3>
                             <div id="opacidadDiv">
@@ -139,14 +139,12 @@
                             </div>
                         </div>
                         <hr />
-                        <fieldset data-role="controlgroup" data-mini="true">
-                            <legend>Capas Catastrales:</legend>
-                            <input type="radio" name="radio-0" id="radio-0" value="C" />
-                            <label for="radio-0">Catastro</label>
-                            <input type="radio" name="radio-2" id="radio-2" value="Q" checked />
-                            <label for="radio-2">Quitar capas</label>
-                        </fieldset>
-
+                        <form>
+                            <input type="checkbox" name="checkboxCatastro" id="checkboxCatastro" data-mini="true">
+                            <label for="checkboxCatastro">Visualizar Catastro</label>
+                        </form>
+                        <p/>
+                        <a href=https://aplicaciones.aragon.es/inacaz target=_blank data-role="button" data-mini="true">Estadísticas/Resultados Caza</a>
                     </div>
             </div>
         </div>
