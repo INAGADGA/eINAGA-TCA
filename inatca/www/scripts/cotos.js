@@ -122,14 +122,14 @@ require([
         }
 
         var infoTemplateZaps = new InfoTemplate("");
-        infoTemplateZaps.setTitle("${CZAP}");
+        infoTemplateZaps.setTitle("ZAP: "+"${CZAP}");
         infoTemplateZaps.setContent(getTextContent3);
         function getTextContent3(graphic) {
             var czap = graphic.attributes.CZAP;
             var texto;
-            texto = "<b>Ámbito:  </b>" + czap.substring(0,2) + "</br>" +
+            texto = "<p><b>Zona adiestramiento de perros</b></p>" + "<p>ZAP en el coto:</p>"+"<b>Ámbito:  </b>" + czap.substring(0,2) + "</br>" +
                 "<b>Número:  </b>" + czap.substring(2, czap.length -2) + "</br>" +
-                "<b>Código:  </b>" + czap.substring(czap.length - 2, czap.length) + "</br>";
+                "<b>Código ZAP:  </b>" + czap.substring(czap.length - 2, czap.length) + "</br>";
             return texto;
         }
 
@@ -330,11 +330,17 @@ require([
             dynamicMSLayer.setOpacity($("#slider-100").val() / 100);
         });
 
-        $(document).on('change', '#fechaini', function () {            
-            var layerDefs = [];
-            layerDefs[3] = dameFiltroFecha(); 
-            layerDefs[4] = dameFiltroFecha(); 
-            dynamicMSLayer.setLayerDefinitions(layerDefs);            
+        $(document).on('change', '#fechaini', function () {
+            var fechaOkIni;
+            var midatestringIni = $("#fechaini").val();
+            fechaOkIni = validaFecha(midatestringIni);
+            if (fechaOKIni) {
+               
+                var layerDefs = [];
+                layerDefs[3] = dameFiltroFecha();
+                layerDefs[4] = dameFiltroFecha();
+                dynamicMSLayer.setLayerDefinitions(layerDefs);
+            }
         });
         
         //click handler for the draw tool buttons
@@ -474,9 +480,9 @@ require([
                 enableHighAccuracy: true,
                 maximumAge: 3600000
             }
-            var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+            var watchID = navigator.geolocation.getCurrentPosition(onSuccess1km, onError, options);
 
-            function onSuccess(position) {
+            function onSuccess1km(position) {
                 //alert('Latitude: ' + position.coords.latitude + '\n' +
                 //    'Longitude: ' + position.coords.longitude + '\n' +
                 //    'Altitude: ' + position.coords.altitude + '\n' +

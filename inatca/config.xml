@@ -108,6 +108,6 @@
   <preference name="android-minSdkVersion" value="16" />
   <preference name="android-maxSdkVersion" value="27" />
   <preference name="android-targetSdkVersion" value="16" />
-  <preference name="deployment-target" value="9" />
+  <preference name="deployment-target" value="8" />
   <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
 </widget>
