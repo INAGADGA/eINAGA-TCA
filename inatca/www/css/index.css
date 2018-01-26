@@ -61,11 +61,19 @@ body {
 }
 
 #contenedor {
-    border-radius: 15px 50px;
+    border-radius: 5px 5px;
     border: 1px solid midnightblue;
-    background-color: #E4E4E4;
     padding: 12px;
     /*display: none;*/
+    /*background-color: #E4E4E4;*/
+    background: rgb(184,198,223); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(184,198,223,1) 0%, rgba(109,136,183,1) 63%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(184,198,223,1) 0%,rgba(109,136,183,1) 63%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(184,198,223,1) 0%,rgba(109,136,183,1) 63%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8c6df', endColorstr='#6d88b7',GradientType=0 ); /* IE6-9 */
+}
+.ui-icon-myapp-email {
+    background-image: url("http://icons.iconarchive.com/icons/iconsmind/outline/24/Deer-2-icon.png");
 }
 
 .app {
@@ -196,7 +204,7 @@ h5 {
     -moz-animation: fade 3000ms infinite
 }
 
-.loader {
+/*.loader {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid blue;
@@ -205,7 +213,7 @@ h5 {
     height: 120px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-}
+}*/
 
 @-webkit-keyframes spin {
     0% {

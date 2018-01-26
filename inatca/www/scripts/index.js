@@ -20,7 +20,10 @@ function redireccionar() {
 
         // TODO: Cordova se ha cargado. Haga aquí las inicializaciones que necesiten Cordova.
         var parentElement = document.getElementById('deviceready');        
-        setTimeout("redireccionar()", 2000); //tiempo expresado en milisegundos
+        var enlaces = document.getElementById('contenedor');
+        enlaces.setAttribute('style', 'display:block;');
+
+        //setTimeout("redireccionar()", 2000); //tiempo expresado en milisegundos
     }
 
     function onPause() {
