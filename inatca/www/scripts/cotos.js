@@ -95,7 +95,7 @@ require([
                 "</br>" +
                 "<b>Desde:  </b>" + new Date(parseInt(graphic.attributes.FDESDE)).toLocaleDateString("es-ES", options) + "</br>" +
                 "<b>Hasta:  </b>" + txtDate2 + "</br></br>" +
-                "<a href=http://aplicaciones.aragon.es/inacotos/buscar.do?ambito.ambito=" + graphic.attributes.AMBITO + "&coto=" + graphic.attributes.NUMERO + "&m=coto target=_blank>Consulta Plan Anual</a><hr/>" +
+                "<a href=http://aplicaciones.aragon.es/inacotos/buscar.do?ambito.ambito=" + graphic.attributes.AMBITO + "&coto=" + graphic.attributes.NUMERO + "&m=coto target=_blank rel='noopener noreferrer'>Consulta Plan Anual</a><hr/>" +
                 '<div id="divlocalizar"> ' +
                 '<input type="button" value="Acercar "  id="locate"  title="Centrar Mapa" alt="Centrar Mapa" class = "localizacion" onclick="  fTemplate(); "/></div>';
             return texto;
@@ -313,9 +313,9 @@ require([
         home.startup();
 
         // Capas necesarias -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        var fcCotos = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/4");
+        var fcCotos = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/4");
         var fcMunis = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/3");
-        var fcPks = new FeatureLayer("http://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
+        var fcPks = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
         var dynamicMSLayerBasico = new esri.layers.ArcGISDynamicMapServiceLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer", {
 
             id: "xLimites",
