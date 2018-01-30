@@ -313,9 +313,9 @@ require([
         home.startup();
 
         // Capas necesarias -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        var fcCotos = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Cotos_historico/MapServer/4");
+        var fcCotos = new FeatureLayer(rutaServicio + "/4");
         var fcMunis = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer/3");
-        var fcPks = new FeatureLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_siniestrosT34/MapServer/3")
+        var fcPks = new FeatureLayer(rutaServicio + "/0")
         var dynamicMSLayerBasico = new esri.layers.ArcGISDynamicMapServiceLayer("https://idearagon.aragon.es/servicios/rest/services/INAGA/INAGA_Ambitos/MapServer", {
 
             id: "xLimites",
