@@ -1,0 +1,338 @@
+﻿#pageone {
+    height: 100%
+}
+
+#myPanel {
+    background-color: rgba(255, 255, 255, 0.5)
+}
+
+body {
+    font-family: arial
+}
+.ui-panel-inner {
+    padding: 0.75em
+}
+        .ui-page-theme-a .ui-bar-inherit {
+            text-shadow: 0 0
+        }
+
+        .ui-content {
+            height: 100%;
+            padding: 0
+        }
+
+        #backButton {
+            position: absolute;
+            left: 18px;
+            top: 10px;
+            border-radius: 5px;
+            background-color: rgba(7, 41, 101, 0.85);
+            padding: 2px;
+            width: 40px;
+            height: 30px;
+            color: #000;
+            z-index: 40
+        }
+
+        #herramientas {
+            position: absolute;
+            left: 18px;
+            top: 55px;
+            color: #000;
+            z-index: 40;
+            border-radius: 5px;
+            background-color: rgba(7, 41, 101, 0.85);
+            padding: 2px;
+            width: 40px;
+            height: 30px;
+            color: #000
+        }
+
+        #search {
+            display: block;
+            position: absolute;
+            z-index: 40;
+            top: 110px;
+            left: 18px
+        }
+
+        #tituloVisor {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 30;
+            text-shadow: 0 0 3px #000, 0 0 5px #000;
+            /*background-color: rgba(22, 22, 22, 0.54);*/
+            color: #000 !important;
+            font-weight: 700;
+            font-size: 0.8em
+            /*border: 1px solid #000;    
+    border-radius: 5px;*/
+            /*padding:7px;*/
+        }
+
+        #HomeButton {
+            position: absolute;
+            top: 155px;
+            left: 19px;
+            z-index: 30
+        }
+
+.HomeButton .home {
+    width: 40px; 
+    background-color: rgba(7, 41, 101, 0.85);
+    border: 1px solid #ddd;
+}
+
+        #LocateButton {
+            position: absolute;
+            top: 200px;
+            left: 19px;
+            z-index: 30
+        }
+
+        .LocateButton .zoomLocateButton {
+            width: 40px;
+            background-color: rgba(7, 41, 101, 0.85);
+        }
+
+        #posicion {
+            position: absolute;
+            /*top: 250px;
+    left: 19px;*/
+            top: 200px;
+            left: 19px;
+            z-index: 40;
+            border-radius: 5px;
+            background-color: rgba(7, 41, 101, 0.85);
+            padding: 2px;
+            width: 40px;
+            height: 30px;
+            color: #000
+        }
+
+        #mapaBase {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            z-Index: 30
+        }
+
+        .arcgisSearch .searchBtn {
+            background-color: rgba(7, 41, 101, 0.85);
+            color: white;
+            border-color: #ddd
+        }
+
+        
+
+        .esriSimpleSliderTL {
+            display: none
+        }
+
+
+        .ui-collapsible-content {
+            background-color: white
+            /*opacity: .6;*/
+        }
+
+        .ui-field-contain, .ui-mobile fieldset.ui-field-contain {
+            padding: 0
+        }
+
+        .dijitTitlePane {
+            display: block;
+            overflow: hidden;
+            background-color: #C0C0C0;
+            color: #000000;
+            font-weight: bold;
+            font-size: 80%
+        }
+
+        .details {
+            font-size: 14px;
+            font-weight: 600;
+            padding-bottom: 20px
+        }
+
+        button {
+            margin: 2px;
+            cursor: pointer
+        }
+
+        /*--------------------------------------------------leyenda------------------------------------------*/
+
+        .esriLegendLayerLabel, .esriLegendLayer {
+            font-family: 'Arial';
+            font-size: 12px;
+            color: black
+        }
+
+        .esriLegendService img {
+            width: 30px
+        }
+
+        .esriLegendServiceLabel {
+            display: none
+        }
+
+        /*--------------------------------------------------Loading------------------------------------------*/
+        /* Second Loadin Circle */
+        .circle {
+            background-color: rgba(0,0,0,0);
+            border: 5px solid rgba(0,183,229,0.9);
+            opacity: .9;
+            border-right: 5px solid rgba(0,0,0,0);
+            border-left: 5px solid rgba(0,0,0,0);
+            border-radius: 30px;
+            width: 30px;
+            height: 30px;
+            margin: 0 auto;
+            -moz-animation: spinPulse 1s infinite ease-in-out;
+            -webkit-animation: spinPulse 1s infinite linear
+        }
+
+        .circle1 {
+            background-color: rgba(0,0,0,0);
+            border: 5px solid rgba(0,183,229,0.9);
+            opacity: .9;
+            border-left: 5px solid rgba(0,0,0,0);
+            border-right: 5px solid rgba(0,0,0,0);
+            border-radius: 30px;
+            box-shadow: 0 0 15px #2187e7;
+            width: 10px;
+            height: 10px;
+            margin: 0 auto;
+            position: relative;
+            top: -30px;
+            -moz-animation: spinoffPulse 1s infinite linear;
+            -webkit-animation: spinoffPulse 1s infinite linear
+        }
+
+        @-moz-keyframes spinPulse {
+            0% {
+                -moz-transform: rotate(160deg);
+                opacity: 0;
+                box-shadow: 0 0 1px #2187e7;
+            }
+
+            50% {
+                -moz-transform: rotate(145deg);
+                opacity: 1;
+            }
+
+            100% {
+                -moz-transform: rotate(-320deg);
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes spinoffPulse {
+            0% {
+                -moz-transform: rotate(0deg);
+            }
+
+            100% {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes spinPulse {
+            0% {
+                -webkit-transform: rotate(160deg);
+                opacity: 0;
+                box-shadow: 0 0 1px #2187e7;
+            }
+
+            50% {
+                -webkit-transform: rotate(145deg);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: rotate(-320deg);
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes spinoffPulse {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .ui-select .ui-btn select {
+            font-size: 1em
+        }
+
+        /*--------------------------------------------------basemapgallery------------------------------------------*/
+
+        .esriBasemapGalleryThumbnail {
+            height: 47px;
+            width: 80px
+        }
+
+        .esriBasemapGalleryLabelContainer {
+            font-size: .8em;
+            font-weight: 600;
+            text-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff
+        }
+
+        .esriBasemapGallery {
+            /*background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(0,183,229,0.9);*/
+            height: 50%;
+            opacity: .9
+        }
+
+        /*--------------------------------------------------acercar a------------------------------------------*/
+
+        #divlocalizar {
+            margin: auto;
+            width: 50%
+        }
+
+        .svg-icon {
+            width: 1em;
+            height: 1em;
+        }
+        .svg-icon path,
+        .svg-icon polygon,
+        .svg-icon rect {
+                fill: #4691f6;
+            }
+
+            .svg-icon circle {
+                stroke: #4691f6;
+                stroke-width: 1
+            }
+        .localizacion {
+            /*background-image: url("../images/ico_localizacion.png");*/
+            background-size: 16px 16px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            width: 75%;
+        }
+@media (min-width: 28em) {
+    .ui-field-contain > label, .ui-field-contain .ui-controlgroup-label, .ui-field-contain > .ui-rangeslider > label {
+        float: left;
+        width: 27%;
+        margin: .5em 2% 0 0;
+    }
+}
+
+@media (min-width: 28em) {
+        .ui-field-contain > label ~ [class*=ui-], .ui-field-contain .ui-controlgroup-controls {
+            float: left;
+            width: 70%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+    }

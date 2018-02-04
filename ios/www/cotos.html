@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="es-es">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' 'unsafe-inline';
+                     script-src 'self' https://geocode.arcgis.com https://code.jquery.com  https://js.arcgis.com  https://idearagon.aragon.es http://idearagon.aragon.es https://clarity.maptiles.arcgis.com https://tile.openstreetmap.org 'unsafe-eval' 'unsafe-inline' data: gap: https://ssl.gstatic.com 'unsafe-eval';
+                     style-src 'self'  https://geocode.arcgis.com https://code.jquery.com  https://js.arcgis.com  https://idearagon.aragon.es  http://idearagon.aragon.es https://dojotoolkit.org 'unsafe-inline';
+                     connect-src 'self' https://geocode.arcgis.com https://dojotoolkit.org https://dojotoolkit.org https://idearagon.aragon.es http://idearagon.aragon.es https://sampleserver6.arcgisonline.com  https://server.arcgisonline.com  https://www.arcgis.com https://server.arcgisonline.com https://clarity.maptiles.arcgis.com  https://services.arcgisonline.com https://ovc.catastro.meh.es  http://ovc.catastro.meh.es https://tile.openstreetmap.org https://aplicaciones.aragon.es 'unsafe-eval' 'unsafe-inline' 'self' ws:;
+                     img-src 'self'  https://geocode.arcgis.com https://code.jquery.com  https://js.arcgis.com https://idearagon.aragon.es http://idearagon.aragon.es https://sampleserver6.arcgisonline.com  https://server.arcgisonline.com  https://www.arcgis.com https://server.arcgisonline.com https://clarity.maptiles.arcgis.com  https://services.arcgisonline.com https://ovc.catastro.meh.es  http://ovc.catastro.meh.es https://tile.openstreetmap.org https://aplicaciones.aragon.es 'unsafe-eval' 'unsafe-inline' blob: data: ; media-src *;
+                     frame-src www.openstreetmap.org;
+                     font-src  'self' https://js.arcgis.com https://code.jquery.com data:">
+    <title>Visor Terrenos Cinegéticos de Aragón</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="width=device-width, initial-scale=1" http-equiv="content-type" charset="UTF-8" name="viewport" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#4285f4">
+    
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#4285f4">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script>
+        var dojoConfig = { locale: "es-es" }
+    </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script>
+        $(document).bind('mobileinit', function () {
+            $.mobile.changePage.defaults.changeHash = false;
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.23compact/init.js"></script>
+    <script type="text/javascript" src="scripts/cotos.js"></script>
+    <script type="text/javascript" src="scripts/ortoYocaso.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/popup.css">
+    <link rel="stylesheet" type="text/css" href="css/comunes.css">
+    <link rel="stylesheet" type="text/css" href="css/cotos.css">
+
+</head>
+<body>
+    <div data-role="page" id="pageone">
+        <div data-role="panel" id="myPanel" data-position="right" data-display="overlay" data-dismissible="true" data-swipe-close="false" style="z-Index:60;">
+            <div data-role="main" class="ui-content">
+                
+                <div data-role="collapsible-set" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                    <!--<h3>Consulta de cotos</h3>-->
+                    <div class="ui-body ui-body-a ui-corner-all" style="background-color: rgb(230,230,230);">
+                        <div>Visualizar cotos en la fecha:</div>
+                        <form>
+                            <div data-role="fieldcontain" style="margin: 0;">                                
+                                <input id="fechaini" type="date" data-role="date">
+                            </div>
+                        </form>
+                    </div>      
+                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Localización de Cotos</h3>
+                        <div id="selector" data-role="fieldcontain" class="ui-mini" style="width:95%">
+                            <select name="select-choice-0" id="select-choice-1" data-theme="b">
+                                <option value="22">Huesca</option>
+                                <option value="44">Teruel</option>
+                                <option value="50">Zaragoza</option>
+                            </select>
+                        </div>
+                        <div data-role="fieldcontain">
+                            <label for="numero" data-mini="true">Número:</label>
+                            <input type="text" data-mini="true" id="numero" size="5" maxlength="5" value="10130" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        </div>
+                        <!--<button type="button" id="busquedaCotos" style="width: 200px;height: 40px;font-size: 10px;background-color:#A4A4A4;color:#FFFFFF;text-shadow: 0 0px"><b>Localizar coto</b></button>-->
+                        <a id="busquedaCotos" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;" title="Localizar un coto">Localizar coto</a>
+                        <div id="busqueda"></div>
+                    </div>
+                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Área de Influencia</h3>
+                        <label>Realiza un buffer de 1km:</label>
+                        <button type="button" class="tool" id="point" style="height:33px;padding:0px;margin:0px" title="buffer de 1km.">
+                            <svg id="point1" class="search-icon" viewBox="0 0 24 24">
+                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                                <path d="M0 0h24v24H0z" fill="none" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Punto Kilométrico</h3>
+                        <div class="ui-field-contain">
+                            <label for="VIA">VIA:</label>                            
+                            <input type="text" class="ui-mini" id="VIA" size="15" value="A-2" name="via"/>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="PK">PK:</label>
+                            <input type="text" class="ui-mini" id="PK" size="5" value="300" style="width:100px" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        </div>                        
+                        <a id="localizaPk" data-role="button" style="clear:both;height:20px;height:20px;padding:0px;" title="Localizar punto km en carretera">Localizar PK</a>
+                        <div id="seleccion"></div>
+                    </div>
+                    <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3>Mi posición</h3>
+                        <a id="posicionHerr" data-role="button" style="height:20px;height:20px;padding:0px;" title="Cotos en su posición">Cotos en tu posición</a>                        
+                    </div>
+                    <div data-role="collapsible" id="colapseCotos" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-theme="A" data-content-theme="C">
+                        <h3>Cotos Afectados</h3>
+                        <div class="details"></div>
+                        <div id="ortoyocaso">Orto y Ocaso</div>
+                    </div>
+                </div>
+                <p />
+                <hr />
+                <div data-role="collapsible-set">
+                        <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                            <h3>Medición y Coordenadas</h3>
+                            <div id="measurementDiv"></div>
+                            <div id="etrs" style="font-size: 12px;text-align: left;vertical-align: middle;"></div>
+                            <!--<button type="button" id="clearGraphicsM" style="width: 150px;height: 40px;font-size: 10px;text-align: center;vertical-align: middle;position:relative;">Borra medición</button>-->
+                            <a id="clearGraphicsM" data-role="button" style="height:20px;height:20px;padding:0px;" title="Borrar medición">Borra medición</a>
+                        </div>
+                        <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                            <h3>Leyenda</h3>
+                            <div id="legendDiv"></div>
+                        </div>                        
+                        <div data-role="collapsible" data-inset="true" data-mini="true" data-iconpos="right" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                            <h3>Opacidad</h3>
+                            <div id="opacidadDiv">
+                                <form>
+                                    <input type="range" name="slider-10" id="slider-100" min="0" max="100" step=".1" value="100">
+                                </form>
+                            </div>
+                        </div>
+                        <hr />
+                        <form>
+                            <input type="checkbox" name="checkboxCatastro" id="checkboxCatastro" data-mini="true" title="Capa Catastro">
+                            <label for="checkboxCatastro">Visualizar Catastro</label>
+                        </form>
+                        <p/>
+                        <a href=https://aplicaciones.aragon.es/inacaz target=_blank data-role="button" data-mini="true" rel="noopener noreferrer">Estadísticas/Resultados Caza</a>
+                    </div>
+            </div>
+        </div>
+
+        <div data-role="main" class="ui-content" style="height: 100%;">
+            <div id="map"
+                 data-dojo-type="dijit/layout/ContentPane"
+                 data-dojo-props="region:'center'"
+                 style="position: absolute;height: 100%;width: 100%;">
+                <a id="mapaBase" href="#popupNested" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-grid ui-btn-icon-left ui-btn-b ui-mini" data-transition="pop" title="Cambiar mapa Base">Mapa Base</a>
+                <div data-role="popup" id="popupNested" data-theme="none" data-mini="true">
+                    <div id="basemapGallery" style="background-color: #ffffff;opacity:0.4"></div>
+                </div><!-- /popup -->
+                <a id="backButton" href="index.html" target="_system" data-role="button" data-icon="arrow-l" title="Volver a inicio"></a>
+                <div id="tituloVisor"></div>
+                <div id="HomeButton"></div>
+                <!--<div id="LocateButton"></div>-->
+                <div id="search"></div>
+                <a id="herramientas" href="#myPanel" data-role="button" data-icon="bars" title="Menú herramientas"></a>
+                <a id="posicion" data-role="button" data-icon="location" title="Localizarme en el mapa"></a>
+            </div>
+            <div id="procesando" class="container" style="position:absolute; right:50%; top:50%; z-Index:999;display: none;">
+                <div class="content">
+                    <div class="circle"></div>
+                    <div class="circle1"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
