@@ -52,7 +52,6 @@ require([
     function (dom, domStyle, array, connect, parser, query, on, domConstruct, Color, esriConfig, Map, Graphic, Units, InfoTemplate, PopupMobile, Draw, Circle, normalizeUtils, webMercatorUtils, GeometryService, BufferParameters, Query, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, TextSymbol,
         Measurement, OverviewMap, BasemapGallery, Basemap, BasemapLayer, Scalebar, Search, HomeButton, Legend, LocateButton,  FeatureLayer, ArcGISDynamicMapServiceLayer, WMSLayer, WMSLayerInfo) {
         parser.parse();
-
         var popup = new PopupMobile(null, domConstruct.create("div"));
         setFechas();
         // variables capa de busqueda del servicio a consultar  ------------------------------------------------------------------------------------------------------------------------------
@@ -343,14 +342,22 @@ require([
             }
         });
         
-        //click handler for the draw tool buttons
-        query(".tool").on("click", function (evt) {
+        $("#point").click(function (evt) {
+           
             if (tb) {
                 tb.activate(evt.target.id);
                 map.setInfoWindowOnClick(false);
                 $("[data-role=panel]").panel("close");
-            }
+            } 
         });
+       
+        //query(".tool").on("click", function (evt) {
+        //    if (tb) {
+        //        tb.activate(evt.target.id);
+        //        map.setInfoWindowOnClick(false);
+        //        $("[data-role=panel]").panel("close");
+        //    }
+        //});
         popup.on("selection-change", function () {
             graphico = popup.getSelectedFeature();
         });
