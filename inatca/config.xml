@@ -5,18 +5,17 @@
   <author href="http://cordova.io" email="dev@cordova.apache.org">Instituto Aragonés de Gestión Ambiental</author>
   <vs:template-name>BlankJS</vs:template-name>
   <content src="index.html" />
-  <access origin="*" />
   <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="10.0" />
-  <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
   <!-- Support for Cordova 5.0.0 plugin system -->
   <plugin name="cordova-plugin-whitelist" spec="1.2.2" />
+  <access origin="*" />
   <allow-intent href="https://*/*" />
   <allow-intent href="http://*/*" />
   <allow-intent href="mailto:*" />
   <allow-intent href="geo:*" />
-  <allow-navigation href="about:" />
-  <allow-navigation href="data:" />
+  <allow-navigation href="about:*" />
+  <allow-navigation href="data:*" />
   <platform name="android">
     <allow-intent href="market:*" />
   </platform>
@@ -105,9 +104,11 @@
   <preference name="android-minSdkVersion" value="16" />
   <preference name="android-maxSdkVersion" value="27" />
   <preference name="android-targetSdkVersion" value="16" />
-  <preference name="deployment-target" value="8" />
+  <preference name="deployment-target" value="8.0" />
+  <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
+  <preference name="Fullscreen" value="True" />
   <vs:toolsetVersion>6.3.1</vs:toolsetVersion>
-  <engine name="android" spec="~5.2.1" />
-  <engine name="ios" spec="~4.2.0" />
-  <engine name="windows" spec="~4.4.2" />
+  <engine name="android" spec="5.2.1" />
+  <engine name="ios" spec="4.2.0" />
+  <engine name="windows" spec="4.4.2" />
 </widget>
