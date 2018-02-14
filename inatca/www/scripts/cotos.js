@@ -330,10 +330,10 @@ require([
         });
 
         $(document).on('change', '#fechaini', function () {
-            var fechaOkIni;
-            var midatestringIni = $("#fechaini").val();
-            fechaOkIni = validaFecha(midatestringIni);
-            if (fechaOKIni) {
+           // var fechaOkIni;
+           var midatestringIni = $("#fechaini").val();
+           // fechaOkIni = validaFecha(midatestringIni);
+            if (validaFecha(midatestringIni)) {
                
                 var layerDefs = [];
                 layerDefs[3] = dameFiltroFecha();
