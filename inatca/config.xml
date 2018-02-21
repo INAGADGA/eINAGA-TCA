@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="es.aragon.inatca" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="es-ES" android-versionCode="1">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="es.aragon.inatca" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="es-ES" android-versionCode="100">
   <name>eINAGA-CAZA</name>
   <description>Aplicación para  visualizar y consultar Los Terrenos Cinegéticos de Aragón, Búsquedas por coto y término municipal, realizar buffers a partir de un punto,Localizar PK en carretaras etc. Compatible con dispositivos Android e iOS </description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Instituto Aragonés de Gestión Ambiental</author>
